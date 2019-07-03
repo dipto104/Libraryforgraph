@@ -1,5 +1,3 @@
-var temp = "";
-var rows = []; // init empty array
 var datainput =[];
 var dataconfig =[];
 
@@ -16,38 +14,7 @@ var $_myrunner =function(canvasid,inputdata,configdata){
 	dataconfig=configdata;
 
 	init(canvasid);
-	
-	/*$http({
-	method: 'GET',
-	url: 'http://localhost:5000/database'
-	}).then(function (data){
-	},function (error){
-	console.log("big error");
-	});
-
-	$http({
-		method: 'GET',
-		url: inputurl
-	}).then(function (data){
-	$scope.datainput=data.data;
-	console.log($scope.datainput);
-	},function (error){
-	console.log("big err");
-	});
-	
-	
-	$http({
-		method: 'GET',
-		url: 'Data/config.json'
-	}).then(function (config){
-	$scope.dataconfig=config.data;
-	$scope.init(canvasid);//this is the previous function 
-	console.log($scope.datainput);
-	},function (error){
-	console.log("config error");
-	});*/
-
-			
+				
 }
 	
 
@@ -92,21 +59,14 @@ var init = function(canvasid) {
 		//console.log(cwidth);
 		//console.log(cheight);
 
-		/*var background = new Image();
-		background.src = "Img/Back1.jpg";
 		
-		// Make sure the image is loaded first otherwise nothing will draw.
-		background.onload = function(){
-			ctx.drawImage(background,0,0);   
-		}*/
-
 
 		var maxwidth=0;
 		var maxvalue=0;
 		var textwidth=0;
 		
 		ctx.scale(cwidth/1920,cheight/1080);
-		//ctx.translate(newx,newy);
+		ctx.translate(newx,newy);
 
 		//var verlegth=[];
 		var horlength=[];
@@ -149,14 +109,14 @@ var init = function(canvasid) {
 			ctx.fillText(strings, 0+tempval, statusvpix);
 			statusvpix+=45;
 		}
-		maxvalue=maxvalue+maxvalue+maxwidth+5;//maxvalue is the higest range of pixel of bar
+		maxvalue=maxvalue+maxvalue+maxwidth;//maxvalue is the higest range of pixel of bar
 		
 		var barsize=Number(jsonconfig[7].value);         //size of the small bar
 		var nbar=0;				//number of bar
 		var vpix=0		//vertical start pixel at for bar
 		var scaleing=1;         //scaling number for dynamic page
 		if(maxvalue>c.width){
-			scaleing=maxvalue/(1920-maxwidth-5);			
+			scaleing=maxvalue/(1920-maxwidth);			
 		}
 		
 		//console.log(maxvalue);
@@ -191,9 +151,43 @@ var init = function(canvasid) {
 				tempvalue1=tempvalue1.toFixed(2);
 				var tempvalue="("+tempvalue1+"%)";
 				ctx.fillText(tempvalue, hpix, statusvpix);
-				hpix=hpix+ctx.measureText(tempvalue).width
+				hpix+=ctx.measureText(tempvalue).width
+				var num=Number(hpix)+75;
+				//horlength.push(num);
+				//console.log((horlength.length)+" maxhorlength");//something needs to be done here for alignment
+				vpix+=45;
+				statusvpix+=45;
+			}
+		}
 
-				horlength.push(hpix+75);//something needs to be done here for alignment
+		{	vpix=0;
+			var statusvpix=20;
+			for(var i=0;i<json.length;i++){
+				var hpix=textwidth+15; //horizontal pixel start at for bar
+				
+				var value=Number(json[i].value) ;
+				//scaleing=1;
+				nbar=((value)/barsize)/scaleing; //number of required bar
+				nbar=parseInt(nbar);
+				//console.log(nbar)
+
+
+				
+				for(var j=0;j<nbar;j++){
+					//ctx.drawImage(imagePaper,hpix,vpix,barsize,barsize);
+					//ctx.fillRect(hpix,vpix,barsize,barsize);
+					hpix+=barsize*1.2;
+				}
+
+
+				var tempvalue1=(Number(json[i].value)/totalvalue)*100
+				tempvalue1=tempvalue1.toFixed(2);
+				var tempvalue="("+tempvalue1+"%)";
+				//ctx.fillText(tempvalue, hpix, statusvpix);
+				hpix+=ctx.measureText(tempvalue).width
+				var num=Number(hpix)+75;
+				horlength.push(num);
+				//console.log((horlength.length)+" maxhorlength");//something needs to be done here for alignment
 				vpix+=45;
 				statusvpix+=45;
 			}
@@ -201,19 +195,23 @@ var init = function(canvasid) {
 		
 
 
-
+		//console.log((horlength.length)+" maxhorlength");
 		//console.log(horlength);
 		var maxhorlength=0;
+		
 		for(var a=0;a<horlength.length;a++){
+
 			if(maxhorlength<Number(horlength[a])){
 				maxhorlength=Number(horlength[a]);
+
 			}
 		}
 		//console.log("hello "+maxhorlength);
-		verlegth=vpix-25+50;
+		verlegth=vpix+25;
+
 
 		if(jsonconfig[6].value=="centerleft"){
-			newx=-100;
+			newx=0;
 			newy=(1080-verlegth)/2;
 		}
 		else if(jsonconfig[6].value=="center"){
@@ -226,8 +224,8 @@ var init = function(canvasid) {
 		}
 
 		else if(jsonconfig[6].value=="topleft"){
-			newx=-100;
-			newy=-50;
+			newx=0;
+			newy=0;
 		}
 		else if(jsonconfig[6].value=="topright"){
 			newx=1920-maxhorlength+80;;
