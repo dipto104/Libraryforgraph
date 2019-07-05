@@ -3,7 +3,7 @@
 <head >
 	<title>Angular Js Demo app</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"> </script>
   
 	
 	
@@ -22,43 +22,26 @@
 
 </head>
 
-<body >
+<body ng-app="demo" ng-controller="testCtrl">
     
 	<div  >
       
-      <div >
-        <!-- <label for="number">Number</label>
-        <input class="form-control" type="number" id="number" ng-model="givenNumber" ng-change="printStars()"> 
-
-        <label for="width">Width</label>
-        <input class="form-control" type="number" id="width" ng-model="width" ng-change="printStars()">
-
-        <label for="height">Height</label>
-        <input class="form-control" type="number" id="height" ng-model="height" ng-change="printStars()">
-        
-        
-        
-        
-        <label for="height">Background Color</label>
-        <select ng-model="bcname" ng-change="bcchange()" ng-options="x for x in colornames">
-        </select>-->
       
-        <!--<button type="button" id="btn" ng-click="startpage()">Start</button>-->
+       
 
-        
-        
-        <div>
-          <canvas id="myCanvas"   style="border:1px solid #d3d3d3;">
-          Your browser does not support the HTML5 canvas tag.
-              
-          </canvas>
-        </div>
-        <div>
-          <canvas id="myCanvas2" style="border:1px solid #d3d3d3;">
-          Your browser does not support the HTML5 canvas tag.            
-          </canvas>
-        </div>
+         
+      <div>
+        <canvas id="myCanvas"   style="border:1px solid #d3d3d3;">
+        Your browser does not support the HTML5 canvas tag.
+            
+        </canvas>
       </div>
+      <div>
+        <canvas id="myCanvas2" style="border:1px solid #d3d3d3;">
+        Your browser does not support the HTML5 canvas tag.            
+        </canvas>
+      </div>
+      
  
  
 </div>
@@ -70,24 +53,8 @@
 
 </body>
 <script src="library.js"> </script>
-<script >
-var input=[{"status":"PAY_FAIL","value":6248},{"status":"PAY_SUCCESS","value":868},{"status":"PM_REQUESTED","value":11199},{"status":"PAY_INIT","value":992}] ;
+<script src="angularscript.js"> </script>
 
-
-var config=[
-{"type":"font_name","value":"Calibri"},
-{"type":"font_size","value":"25px"},
-{"type":"font_style","value":"Bold"},
-{"type":"canvas_height","value":"800"},
-{"type":"canvas_width","value":"800"},
-{"type":"background_color","value":null},
-{"type":"alignment","value":"topleft"},
-{"type":"barsize","value":"25"}
-] ;
-var input2=[{"status":"PAY_FAIL","value":200},{"status":"PAY_SUCCESS","value":400},{"status":"PM_REQUESTED","value":400},{"status":"PAY_INIT","value":600}];
-$_myrunner('myCanvas',input,config);
-$_myrunner('myCanvas2',input2,config);
-</script>
 
 
 

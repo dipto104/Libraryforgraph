@@ -235,7 +235,7 @@ var app = angular.module("demo", []);
 						newy=-50;
 					}
 					else if(jsonconfig[6].value=="bottomleft"){
-						newx=-100;
+						newx=0;
 						newy=1080-verlegth+20;
 					}
 					else if(jsonconfig[6].value=="bottomright"){
